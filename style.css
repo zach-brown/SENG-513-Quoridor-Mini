@@ -10,14 +10,14 @@ Objective: First player to reach the other side of the board
 Rules: 
 This game is a twist on the classic board game quoridor. In quoridor mini, both players start on opposite
 sides of a 5x5 board. They have to try and be the first player to reach their opponents side of the board.
-Each player is given 8 walls and can use these walls by placing them down anywhere on the board as long as
-they are not haning over the edge of the board. Players are not allowed to pass through these walls, and must
+Each player is given 4 walls and can use these walls by placing them down anywhere on the board as long as
+they are not hanging over the edge of the board. Players are not allowed to pass through these walls, and must
 instead go around them. On a players turn they can either move on to a square that is orthogonal to them, place one 
 of their walls down, or skip their turn and charge their barge power. When moving, if a player has the other player 
 right in front of them, then they may leap frog that player. When placing walls, there must still be a legal path that 
 still allows the other player to reach the opposite side of the board. If it completely blocks off the player, then the
- wall cannot be placed there. Once a player has run out of walls then they cannot use this action. Instead of moving or placing a wall, 
- the player can instead skip their turn and charge their barge power. Then, next turn or any turn after that they can use the barge attack on any wall
+wall cannot be placed there. Once a player has run out of walls then they cannot use this action. Instead of moving or placing a wall, 
+the player can instead skip their turn and charge their barge power. Then, next turn or any turn after that they can use the barge attack on any wall
 to permanently destroy it from the game. Once the power is used it needs to be charged again. A player can only have 1 barge power
 at a time. Once a player reaches the other side of the board, then that player is crowned the winner
 
@@ -45,14 +45,14 @@ h1{
 .buttons{
     margin: auto;
     display: block;
-
+    
     width: 440px;
     height:100px;
 }
 
 
 .buttons img{
-    
+    cursor: pointer;
     height: 60px;
     width: 60px;
 }
@@ -81,22 +81,23 @@ h1{
     flex-wrap: wrap;
 }
 
+
+
 .wally{
+    cursor:pointer;
     position: relative;
     height: 80px;
     width: 10px;
     
 }
 
-.wally:hover{
-    background-color: grey;
-}
 
-.bargewall:hover{
-    background-color: red;
+.wally.broken{
+    cursor:default;
 }
 
 .wallx{
+    cursor:pointer;
     position: relative;
     margin-top:0;
     height: 10px;
@@ -104,11 +105,12 @@ h1{
     
 }
 
-.wallx:hover{
-    background-color: grey;
-}
+
+
+
 
 .square {
+    
     position: relative;
     width: 80px;
     height:80px;
@@ -122,6 +124,18 @@ h1{
     width: 10px;
 }
 
+.pawn{
+    display: inline-block;
+    width:80px;
+    height:80px;
+}
+
+.greypawn{
+    display: none;
+    width:80px;
+    height:80px;
+    cursor: pointer;
+}
 
 
 .ui{
@@ -134,16 +148,21 @@ h1{
     border-radius: 25px;
 }
 
-#turn{
+.player_info p{
     display: inline-block;
+}
+
+#turn{
     padding-top:35px;
-    padding-left: 20px;
-    color:black;
     font-size: 30px;
 }
 
+#walls_left{
+    margin-top: -20px;
+    font-size: 22px;
+}
 .barges {
-    
+    cursor: pointer;
     display: inline-block;
     padding-top: 50px;
    
@@ -155,40 +174,71 @@ h1{
     position: absolute;
     width: 60px;
     height: 60px;
-    padding-left: 20px;
+    
     margin:0;
 }
-#bargecharge{
-    display:  inline-block;
-} 
 
-#bargedisabled{
-    display:inline-block;
-}
-
-#barge{
+.wallanimation, .chargeanimation{
     display: none;
 }
 
-#bargehighlighted{
+
+#barge, #bargehighlighted{
     display: none;
 }
 
-.help_menu{
+.menu{
+    display:none;
+}
+
+#help_menu{
     position: fixed;
-    display: none;
-    margin: auto;
-    border: 2px solid black;
-    width: 300px;
-    height: 300px;
-    background-color: white;
-}
-.help_menu{
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}  
+    
+
+#menu_text{
+    
+    position: relative;
+    margin: 150px auto;
+
+    z-index: 3;
+    width: 500px;
+    height:380px;
+    text-align: center;
     color: black;
+
+    background-color: white;
+    border-radius: 25px;
+    
 }
+
+#menu_text p{
+    padding: 50px 40px;
+    font-size: 30px;
+    font-weight: 700px;
+}
+
+#menu_text ol{
+    margin: -30px;
+    padding: 0 100px;
+    text-align: left;
+    font-size: 17px;
+    font-weight: 200px;
+}
+
 
 #x{
-    padding-left: 260px;
+    padding: 15px;
+    cursor: pointer;
+    position: absolute;
+    left: 440px;
     width: 30px;
     height: 30px;
 }
