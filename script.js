@@ -1,7 +1,7 @@
 /* Zach Brown 
 UCID: 30070355
-Date: October 23 2023
-SENG513 A2
+Date: November 11 2023
+SENG513 A3
 
 Title: Quoridor Mini
 Platform: Desktop
@@ -193,6 +193,11 @@ function restartGame(){
     gameOver = 0;
     //calls player 1s turn
     nextPlayerTurn();
+
+    /*
+    CHANGES AND JUSTIFICATION
+    Made both brokenwalls into one class so that the code is more efficient
+    */
 }
 
 //function sets walls to grey if user moves mouse over it
@@ -229,6 +234,13 @@ function highlightWall(id){
         document.getElementById(id).style.backgroundColor = "grey";
         document.getElementById(id2).style.backgroundColor = "grey";
     }
+    /*
+    CHANGES AND JUSTIFICATION
+
+    Originally, I had the walls highlight through css but this was changed as it allows me to have two walls highlighted at once.
+    After playtesting the game, I realized that having only 1 wall be placed at a time did not have a big enough impact, so I decided to make it more like
+    the original quoridor board game where each wall takes up two squares. This adds more strategy to the game as each wall really impacts where a player can go
+    */
 }
 
 //this function just resets the wall color to black after user removes their mouse
@@ -258,6 +270,16 @@ function removeHighlightWall(id){
 
 //places wall on board
 function placeWall(id){
+     /*
+     ORIGINAL PSUEDOCODE
+
+    if wall has been placed there
+        return
+    update wall list with this wall id to show there is a wall there
+    change wall color to yellow using id
+    update player turn to next player
+    callNextPlayerTurn()
+    */
 
     var wall = document.getElementById(id);
     
@@ -292,12 +314,27 @@ function placeWall(id){
         nextPlayerTurn();
     }
 
-    
+    /*
+    CHANGES AND JUSTIFICATION
+
+    Since I changed the walls to be double the size, the implementation gets both walls instead of one now
+    */
     
 }
 
 //checks if wall can be placed there by calling a depth first search for each player's positions
 function legalWallPlace(id, id2){
+
+    /* 
+
+    ORIGINAL PSEUDOCODE
+
+    add wall to wall list
+    path finding algorithm to see if a path can be made from bottom of board to top
+    
+    if it can be found then return true
+    otherwise return false
+    */
     
     //adds new walls to a copied list to check if it would be a legal move
     const wallListCopy = [...wallList];
@@ -381,6 +418,9 @@ function removePosLocation(){
 function placePawn(element){
     
     /*
+
+    ORIGINAL PSEUDOCODE
+
     check players turn
     check if there is a legal move for the current position of pawn using legalMove(player #)
     if click is not in legal position to move
@@ -403,6 +443,14 @@ function placePawn(element){
         gameOver = 1;
     }
     nextPlayerTurn();
+
+    /*
+    CHANGES AND JUSTIFICATION
+
+    This function now works a little bit differently as I wanted to add grey pawns that show the user where they can move. This is a quality of life improvement to help the players
+    so they know what they can do with the game. possibleSquares() now gets all legal moves for the player
+
+    */
 }
 
 //puts all possible squares that the player could move to in a list based on the directions that were given by legalMove()
@@ -447,6 +495,18 @@ function possibleSquares(pos){
 
 //checks all legal directions the player can move in and returns a list
 function legalMove(pos, list){
+
+     /*
+    ORIGINAL PSEUDOCODE
+
+    initialize list of 4 directions
+    get players position
+    check all 4 directions from player
+    if there is a wall or border in way of direction then remove that direction from list
+    if there is a pawn in one direction, check if the next square after that is a wall or border
+        then remove direction if thats true
+    return list of positions player can move
+    */
     const directions = [];
     
     //checks if they aren't at edge of board
@@ -473,21 +533,22 @@ function legalMove(pos, list){
         }
     }
     
-    /*
-    initialize list of 4 directions
-    get players position
-    check all 4 directions from player
-    if there is a wall or border in way of direction then remove that direction from list
-    if there is a pawn in one direction, check if the next square after that is a wall or border
-        then remove direction if thats true
-    return list of positions player can move
-    */
+   
    return directions;
+  
 }
 
 
 //adds barge to player and plays animation
 function charge(){
+    /*
+    ORIGINAL PSEUDOCODE
+
+    check players turn
+    set player barge ability to true
+    update player turn to next player
+    callNextPlayerTurn()
+    */
     playerList[playerTurn].barge = 1;
     const frames = document.getElementsByClassName("chargeanimation");
     let i = 0
@@ -501,10 +562,23 @@ function charge(){
         }, 100, 100);
     nextPlayerTurn();
 
+
 }
 
 //gives new attributes to walls that are in walllist so they will turn red when highlighted and can be clicked to trigger breakWall()
 function barge(id){
+     /*
+     ORIGINAL PSEUDOCODE
+
+    if barge was already activated (check with id to see what icon was pressed)
+        set barge highlighted icon display to none
+        then return
+    set barge highlighted icon display to block
+    get all walls from wall list (walls that are currently on the board)
+    add the class bargewall to each wall (so they turn red on hover)
+    add onclick attribute to all walls that calls function breakWall(wall id)
+    */
+
     
     //if barge has already been toggled then untoggle it and get rid of new attributes
     if(document.getElementById("bargehighlighted").style.display == "inline-block"){
@@ -532,13 +606,30 @@ function barge(id){
         w.setAttribute("onmouseover", "redWall(this.id)");
         w.setAttribute("onmouseout", "yellowWall(this.id)");
     }
-    
-
 }
 
 //play animation and add wall to broken class and remove it from board permanently
 function breakWall(id){
+    /* 
+    ORIGINAL PSEUDOCODE
+
+    remove class bargewall from all walls in wall list
+    remove attribute onclick breakWall from all walls in wall list
+    set barge highlighted icon display to none
+    set current players barge to false
+    update player turn to next player
+    remove wall from wall list
+    get wall id
+    if id == wally..
+        remove class wally
+        add class brokenwally 
+    else if id == wallx..
+        remove class wallx
+        add class brokenwallx 
     
+    callNextPlayerTurn()
+    */
+
     for(const wall of wallList){
         var w = document.getElementById(wall);
         w.classList.remove("bargewall");
@@ -583,6 +674,7 @@ function displayDisabled(){
 }
 
 //changes wall color to red if user puts cursor over and the wall is currently in barge class
+//this change was made as it is more feasible to change the color in javascript as opposed to css
 function redWall(id){
     document.getElementById(id).style.backgroundColor = "red";
 }
