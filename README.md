@@ -1,7 +1,11 @@
 Title: Quoridor Mini
+
 Platform: Desktop
+
 Genre: Strategy
+
 Objective: To be the first player to reach the other side of the board
+
 Rules/Game Mechanics: In quoridor mini, you want to be the first player to reach the other side. On your turn, you may do one of 3 possible moves:
 
 
