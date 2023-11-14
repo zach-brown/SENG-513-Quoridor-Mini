@@ -16,5 +16,5 @@ Rules/Game Mechanics: In quoridor mini, you want to be the first player to reach
       You may only charge one barge at a time. Once it is used you must recharge it on a later turn.
 
 
-      Using these moves, you can impede your opponents progress and advance your own to reach the end of the board. 
+Using these moves, you can impede your opponents progress and advance your own to reach the end of the board. 
 
